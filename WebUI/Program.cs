@@ -27,8 +27,8 @@ app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {
-    endpoints.MapControllerRoute(name: "ViewTopic", pattern: "Topic/{id}", new { controller = "Topic", action = "Display" });
-    endpoints.MapControllerRoute(name: "EditTopic", pattern: "Edit/{id}", new { controller = "Topic", action = "Edit" });
+    endpoints.MapControllerRoute(name: "ViewTopic", pattern: "{id:int}", new { controller = "Topic", action = "Display" });
+    endpoints.MapControllerRoute(name: "EditTopic", pattern: "Edit/{id:int}", new { controller = "Topic", action = "Edit" });
     endpoints.MapControllerRoute(name: "CreateTopic", pattern: "Create", new { controller = "Topic", action = "Create" });
     endpoints.MapControllerRoute(name: "default", pattern: "{controller=Topic}/{action=Index}/{id?}");
 });

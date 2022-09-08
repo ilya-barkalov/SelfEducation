@@ -65,18 +65,30 @@
         });
 
         async function loadTags() {
+
+            // Topic tags
+            const modelTags = @Html.Raw(Json.Serialize(@Model.Tags));
+
             const tags = await GET('/Tag/Get', {}, { dataType: 'json' });
 
             for (let i = 0; i < tags.length; i++) {
-                $('#Tags').append(`<option value="${tags[i].id}" >${tags[i].title}</option>`);
+                const selected = modelTags.includes(tags[i].title) ? 'selected' : '';
+
+                $('#Tags').append(`<option value="${tags[i].id}" ${selected}>${tags[i].title}</option>`);
             }
         }
 
         async function loadLevels() {
+
+            // Topic levels
+            const modelLevels = @Html.Raw(Json.Serialize(@Model.Levels.Select(x => x.Title)));
+
             const levels = await GET('/Level/Get', {}, { dataType: 'json' });
 
             for (let i = 0; i < levels.length; i++) {
-                $('#Levels').append(`<option value="${levels[i].id}" >${levels[i].title}</option>`);
+                const selected = modelLevels.includes(levels[i].title) ? 'selected' : '';
+
+                $('#Levels').append(`<option value="${levels[i].id}" ${selected}>${levels[i].title}</option>`);
             }
         }
     </script>
