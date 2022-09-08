@@ -1,0 +1,78 @@
+﻿@using Application.Features.GetTopics
+
+@{
+    ViewData["Title"] = "Главная";
+}
+
+<form class="row mb-4" asp-action="GetTopics" asp-controller="Topic" method="get">
+    <div class="col">
+        <input name="title" id="title" type="text" class="form-control" placeholder="Название темы" />
+    </div>
+    <div class="col">
+        <select name="Tags" id="Tags" class="selectpicker w-100" title="Метки" multiple data-live-search="true">
+        </select>
+    </div>
+    <div class="col-auto">
+        <select name="Levels" id="Levels" class="selectpicker" title="Уровень" multiple>
+        </select>
+    </div>
+
+    <div class="col-auto">
+        <input type="submit" class="btn btn-success" value="Найти" />
+    </div>
+</form>
+
+<div id="topics">
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(async function () {
+            await loadTags();
+            await loadLevels();
+
+            $('form').submit(submitForm);
+
+            $('form').submit();
+
+            $('#Tags').selectpicker('refresh');
+            $('#Levels').selectpicker('refresh');
+        });
+
+        async function submitForm(e) {
+            e.preventDefault();
+
+            // Данные для запроса.
+            const data = $(this).serialize();
+            const action = $(this).attr('action');
+
+            console.log('123')
+            console.log(data)
+            console.log(action)
+
+            try {
+                const html = await GET(action, data);
+
+                $('#topics').html(html);
+            } catch (exception) {
+                console.log(exception);
+            }
+        }
+
+        async function loadTags() {
+            const tags = await GET('/Tag/Get', {}, { dataType: 'json' });
+
+            for (let i = 0; i < tags.length; i++) {
+                $('#Tags').append(`<option value="${tags[i].id}">${tags[i].title}</option>`);
+            }
+        }
+
+        async function loadLevels() {
+            const levels = await GET('/Level/Get', {}, { dataType: 'json' });
+
+            for (let i = 0; i < levels.length; i++) {
+                $('#Levels').append(`<option value="${levels[i].id}" >${levels[i].title}</option>`);
+            }
+        }
+    </script>
+}

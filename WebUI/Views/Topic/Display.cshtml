@@ -1,0 +1,65 @@
+﻿@using Application.Features.GetTopic
+
+@model TopicDto
+
+@section Styles {
+    <script src="https://cdn.tiny.cloud/1/wlmxzhf104ijt8igy6sg14kuj7t5rbyaeu0h75k1j6patgs3/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: '#Content',
+            plugins: [
+                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+                'anchor', 'searchreplace', 'visualblocks', 'code', 'codesample', 'fullscreen',
+                'insertdatetime', 'media', 'table', 'help', 'wordcount'
+            ],
+            toolbar: 'undo redo | blocks | ' +
+                'codesample bold italic backcolor | alignleft aligncenter ' +
+                'alignright alignjustify | bullist numlist outdent indent | ' +
+                'removeformat | link | help',
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }',
+            skin: 'borderless',
+            height: 500,
+            statusbar: false,
+            init_instance_callback: function(editor) {
+                editor.getBody().setAttribute('contenteditable', false);
+            },
+            menubar: false,
+            toolbar: false
+        });
+
+    </script>
+}
+
+<a href="Edit/@Model.Id" class="btn btn-success">
+    Редактировать
+</a>
+
+<div class="row">
+    <div class="mt-2 mb-3 col-12 border border-1 rounded-3 p-3">
+        <div class="d-flex justify-content-between">
+            <div>
+                <h3>@Model.Title</h3>
+            </div>
+            <div>
+                @foreach (var level in Model.Levels) 
+                {
+                    <span class="badge" style="background: @level.Color">
+                        @level.Title
+                    </span>
+                }
+                @foreach (var tag in Model.Tags) 
+                {
+                    <span class="badge bg-secondary">
+                        @tag
+                    </span>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 mb-4">
+        <textarea id="Content" name="Content" disabled="disabled">
+            @Model.Content
+        </textarea>
+    </div>
+</div>

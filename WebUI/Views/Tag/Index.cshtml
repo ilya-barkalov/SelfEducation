@@ -1,0 +1,82 @@
+﻿@using Application.Features.GetTags
+
+@model IEnumerable<TagDto>
+
+@{
+    ViewData["Title"] = "Тэги";
+}
+
+<form class="row mb-4" asp-action="Create" asp-controller="Tag">
+    <div class="col">
+        <input name="Title" id="Title" type="text" class="form-control" placeholder="Название" />
+    </div>
+    <div class="col-auto">
+        <input type="submit" class="btn btn-success" value="Создать" />
+    </div>
+</form>
+
+
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Название</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tag in Model) 
+        {
+            <tr>
+                <th scope="row">@tag.Id</th>
+                <td>@tag.Title</td>
+                <td class="text-end">
+                    <a class="btn" asp-action="Update" asp-controller="Tag" asp-route-id="@tag.Id">
+                        <i class="bi bi-pen"></i>
+                    </a>
+                    <button class="btn remove" data-id="@tag.Id">
+                        <i class="bi bi-trash3"></i>
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        $('form').submit(async function (e) {
+            e.preventDefault();
+
+            const action = $(this).attr('action');
+            const data = $(this).serialize();
+
+            try {
+                await POST(action, data);
+
+                window.location.href = "/Tag/Index";
+            }
+            catch (error) {
+                console.log(error);
+            }
+        })
+
+        $('.remove').click(async function(e) {
+            e.preventDefault();
+
+            const action = '/Tag/Delete';
+            const data = { Id: $(this).data('id') };
+
+            try {
+                console.log(data);
+
+                await POST(action, data);
+
+                window.location.href = "/Tag/Index";
+            }
+            catch (error) {
+                console.log(error);
+            }
+        })
+    </script>
+}

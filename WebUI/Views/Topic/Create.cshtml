@@ -1,0 +1,75 @@
+﻿@section Styles {
+    <script src="https://cdn.tiny.cloud/1/wlmxzhf104ijt8igy6sg14kuj7t5rbyaeu0h75k1j6patgs3/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: '#Content',
+            plugins: [
+                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+                'anchor', 'searchreplace', 'visualblocks', 'code', 'codesample', 'fullscreen',
+                'insertdatetime', 'media', 'table', 'help', 'wordcount'
+            ],
+            toolbar: 'undo redo | blocks | ' +
+                'codesample bold italic backcolor | alignleft aligncenter ' +
+                'alignright alignjustify | bullist numlist outdent indent | ' +
+                'removeformat | link | help',
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }',
+            skin: 'oxide-dark',
+            content_css: 'dark',
+            height: 500,
+            statusbar: false,
+        });
+    </script>
+}
+
+<form class="row" asp-controller="Topic" asp-action="Create" method="post">
+    <div class="col-12 mb-4">
+        <input id="Title" name="Title" type="text" class="form-control" placeholder="Введите название" />
+    </div>
+
+    <div class="col-6 mb-4">
+        <select name="Tags" id="Tags" class="selectpicker w-100" title="Метки" multiple data-live-search="true">
+        </select>
+    </div>
+
+    <div class="col-6 mb-4">
+        <select name="Levels" id="Levels" class="selectpicker w-100" title="Уровень" multiple>
+        </select>
+    </div>
+
+    <div class="col-12 mb-4">
+        <textarea id="Content" name="Content">
+        </textarea>
+    </div>
+
+    <div class="col-12">
+        <input type="submit" value="Сохранить" class="btn btn-success" />
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        $(document).ready(async function() {
+            await loadTags();
+            await loadLevels();
+
+            $('#Tags').selectpicker('refresh');
+            $('#Levels').selectpicker('refresh');
+        });
+
+        async function loadTags() {
+            const tags = await GET('/Tag/Get', {}, { dataType: 'json' });
+
+            for (let i = 0; i < tags.length; i++) {
+                $('#Tags').append(`<option value="${tags[i].id}" >${tags[i].title}</option>`);
+            }
+        }
+
+        async function loadLevels() {
+            const levels = await GET('/Level/Get', {}, { dataType: 'json' });
+
+            for (let i = 0; i < levels.length; i++) {
+                $('#Levels').append(`<option value="${levels[i].id}" >${levels[i].title}</option>`);
+            }
+        }
+    </script>
+}

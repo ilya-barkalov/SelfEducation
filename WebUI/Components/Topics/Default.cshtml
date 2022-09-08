@@ -1,0 +1,29 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Application.Features.GetTopics
+
+@model IEnumerable<TopicDto>
+
+@foreach (var topic in Model)
+{
+    <div class="mt-2 border border-1 rounded-3 p-3 topic-card">
+        <a class="d-flex justify-content-between" href="Topic/@topic.Id">
+            <div>
+                <h3>@topic.Title</h3>
+            </div>
+            <div>
+                @foreach (var level in topic.Levels)
+                {
+                    <span class="badge" style="background: @level.Color">
+                        @level.Title
+                    </span>
+                }
+                @foreach (var tag in topic.Tags)
+                {
+                    <span class="badge bg-secondary">
+                        @tag
+                    </span>
+                }
+            </div>
+        </a>
+    </div>
+}

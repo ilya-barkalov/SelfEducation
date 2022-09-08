@@ -1,0 +1,39 @@
+﻿@using Application.Features.GetTag
+
+@model TagDto
+
+@{
+    ViewData["Title"] = "Редактирование тэга";
+}
+
+<form class="row mb-4" asp-action="Update" asp-controller="Tag" method="post">
+
+    <input type="hidden" asp-for="Id" />
+
+    <div class="col">
+        <input name="Title" id="Title" type="text" class="form-control" placeholder="Название" asp-for="Title" />
+    </div>
+    <div class="col-auto">
+        <input type="submit" class="btn btn-success" value="Создать" />
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        $('form').submit(async function (e) {
+            e.preventDefault();
+
+            const action = $(this).attr('action');
+            const data = $(this).serialize();
+
+            try {
+                await POST(action, data);
+
+                window.location.href = "/Tag/Index";
+            }
+            catch (error) {
+                console.log(error);
+            }            
+        })
+    </script>
+}
