@@ -1,4 +1,5 @@
-﻿using Application.Common.Interfaces;
+﻿using Application.Common.Exceptions;
+using Application.Common.Interfaces;
 using Domain.Entities;
 
 using MediatR;
@@ -30,8 +31,7 @@ internal class UpdateTopicCommandHandler : IRequestHandler<UpdateTopicCommand, U
             .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
         if (topic is null)
         {
-            // TODO: Create own type exc eption for not found case.
-            throw new Exception("Not found exception!");
+            throw new NotFoundException("Topic not found!");
         }
 
         topic.Title = request.Title;

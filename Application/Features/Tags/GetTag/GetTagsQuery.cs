@@ -1,4 +1,5 @@
-﻿using Application.Common.Interfaces;
+﻿using Application.Common.Exceptions;
+using Application.Common.Interfaces;
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
@@ -34,8 +35,7 @@ internal class GetTagQueryHandler : IRequestHandler<GetTagQuery, TagDto>
 
         if (tag is null)
         {
-            // TODO: Create own type exc eption for not found case.
-            throw new Exception("Not found exception!");
+            throw new NotFoundException("Tag not found!");
         }
 
         return tag;

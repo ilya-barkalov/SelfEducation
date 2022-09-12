@@ -1,4 +1,5 @@
-﻿using Application.Common.Interfaces;
+﻿using Application.Common.Exceptions;
+using Application.Common.Interfaces;
 using Domain.Entities;
 
 using MediatR;
@@ -19,8 +20,7 @@ internal class CreateTagCommandHandler : IRequestHandler<CreateTagCommand, Unit>
         var alreadyExists = await _context.Tags.AnyAsync(x => x.Title == request.Title, cancellationToken);
         if (alreadyExists)
         {
-            // TODO: Create own type exc eption for business logic validation.
-            throw new Exception("Business logic exception!");
+            throw new ValidationException("Tag with same name exists!");
         }
 
         await _context.Tags.AddAsync(new Tag(request.Title), cancellationToken);
