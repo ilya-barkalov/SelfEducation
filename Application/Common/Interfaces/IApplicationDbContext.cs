@@ -2,7 +2,7 @@
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Common;
+namespace Application.Common.Interfaces;
 
 public interface IApplicationDbContext
 {
