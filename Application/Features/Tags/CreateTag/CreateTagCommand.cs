@@ -6,7 +6,7 @@ using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Features.CreateTag;
+namespace Application.Features.Tags.CreateTag;
 
 public record CreateTagCommand(string Title) : IRequest;
 

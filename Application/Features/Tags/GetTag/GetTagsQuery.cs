@@ -4,7 +4,7 @@ using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Features.GetTag;
+namespace Application.Features.Tags.GetTag;
 
 public class TagDto
 {

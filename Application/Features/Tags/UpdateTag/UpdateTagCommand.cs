@@ -4,16 +4,16 @@ using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Features.DeleteTag;
+namespace Application.Features.Tags.UpdateTag;
 
-public record DeleteTagCommand(int Id) : IRequest;
+public record UpdateTagCommand(int Id, string Title) : IRequest;
 
-internal class DeleteTagCommandHandler : IRequestHandler<DeleteTagCommand, Unit>
+internal class UpdateTagCommandHandler : IRequestHandler<UpdateTagCommand, Unit>
 {
     private readonly IApplicationDbContext _context;
-    public DeleteTagCommandHandler(IApplicationDbContext context) => _context = context;
+    public UpdateTagCommandHandler(IApplicationDbContext context) => _context = context;
 
-    public async Task<Unit> Handle(DeleteTagCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(UpdateTagCommand request, CancellationToken cancellationToken)
     {
         var tag = await _context.Tags.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
         if (tag is null)
@@ -22,7 +22,7 @@ internal class DeleteTagCommandHandler : IRequestHandler<DeleteTagCommand, Unit>
             throw new Exception("Not found exception!");
         }
 
-        _context.Tags.Remove(tag);
+        tag.Title = request.Title;
         await _context.SaveChangesAsync(cancellationToken);
 
         return Unit.Value;

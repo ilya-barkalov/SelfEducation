@@ -1,8 +1,8 @@
-﻿using Application.Features.CreateTag;
-using Application.Features.DeleteTag;
-using Application.Features.GetTag;
-using Application.Features.GetTags;
-using Application.Features.UpdateTag;
+﻿using Application.Features.Tags.CreateTag;
+using Application.Features.Tags.DeleteTag;
+using Application.Features.Tags.GetTag;
+using Application.Features.Tags.GetTags;
+using Application.Features.Tags.UpdateTag;
 
 using MediatR;
 
