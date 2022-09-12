@@ -6,7 +6,7 @@ using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Features.GetTopic;
+namespace Application.Features.Topics.GetTopic;
 
 public class TopicDto
 {
@@ -54,7 +54,7 @@ internal class GetTopicQueryHandler : IRequestHandler<GetTopicQuery, TopicDto>
             .Include(x => x.TopicLevels)
                 .ThenInclude(x => x.Level)
             .FirstOrDefaultAsync(t => t.Id == request.Id, cancellationToken);
-        
+
         if (topic is null)
         {
             // TODO: Create own type exc eption for not found case.

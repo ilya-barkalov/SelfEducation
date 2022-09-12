@@ -1,7 +1,7 @@
-﻿using Application.Features.CreateTopic;
-using Application.Features.GetTopic;
-using Application.Features.GetTopics;
-using Application.Features.UpdateTopic;
+﻿using Application.Features.Topics.CreateTopic;
+using Application.Features.Topics.GetTopic;
+using Application.Features.Topics.GetTopics;
+using Application.Features.Topics.UpdateTopic;
 
 using MediatR;
 

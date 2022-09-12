@@ -4,7 +4,7 @@ using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Features.GetLevels;
+namespace Application.Features.Levels.GetLevels;
 
 public class LevelDto
 {

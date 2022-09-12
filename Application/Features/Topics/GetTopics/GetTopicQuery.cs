@@ -6,7 +6,7 @@ using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Features.GetTopics;
+namespace Application.Features.Topics.GetTopics;
 
 public class TopicDto
 {
@@ -52,7 +52,7 @@ internal class GetTopicsQueryHandler : IRequestHandler<GetTopicsQuery, IEnumerab
             .Include(x => x.TopicLevels)
                 .ThenInclude(x => x.Level)
             .AsQueryable();
-        
+
         if (!string.IsNullOrWhiteSpace(request.Title))
         {
             query = query.Where(x => x.Title.Contains(request.Title));
@@ -60,8 +60,8 @@ internal class GetTopicsQueryHandler : IRequestHandler<GetTopicsQuery, IEnumerab
 
         if (request.Tags?.Any() == true)
         {
-            query = query.Where(x 
-                => x.TopicTags.Any(y 
+            query = query.Where(x
+                => x.TopicTags.Any(y
                     => request.Tags.Contains(y.TagId)));
         }
 

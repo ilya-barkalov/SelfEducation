@@ -1,6 +1,7 @@
-﻿using Application.Features.GetLevels;
+﻿using Application.Features.Levels.GetLevels;
 
 using MediatR;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebUI.Controllers;

@@ -6,7 +6,7 @@ using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Features.UpdateTopic;
+namespace Application.Features.Topics.UpdateTopic;
 
 public class UpdateTopicCommand : IRequest
 {
@@ -49,7 +49,7 @@ internal class UpdateTopicCommandHandler : IRequestHandler<UpdateTopicCommand, U
     private void ProcessTags(Topic topic, IEnumerable<int> tags)
     {
         var tagsInTopic = topic.TopicTags.Select(x => x.TagId);
-        
+
         foreach (var tag in tags)
         {
             var itemExists = tagsInTopic.Contains(tag);
@@ -57,7 +57,7 @@ internal class UpdateTopicCommandHandler : IRequestHandler<UpdateTopicCommand, U
             {
                 continue;
             }
-            
+
             topic.TopicTags.Add(new TopicTag { TagId = tag, TopicId = topic.Id });
         }
 

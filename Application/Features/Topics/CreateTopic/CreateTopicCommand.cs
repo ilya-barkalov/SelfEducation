@@ -4,13 +4,13 @@ using Domain.Entities;
 
 using MediatR;
 
-namespace Application.Features.CreateTopic;
+namespace Application.Features.Topics.CreateTopic;
 
 public record CreateTopicCommand : IRequest<int>
 {
     public string Title { get; set; }
     public string Content { get; set; }
-    public IEnumerable<int> Tags { get; set; } 
+    public IEnumerable<int> Tags { get; set; }
     public IEnumerable<int> Levels { get; set; }
 }
 
